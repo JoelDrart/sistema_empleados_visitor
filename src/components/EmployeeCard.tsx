@@ -12,7 +12,7 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee, salary }) => {
             <img
                 src={empImg}
                 alt="Employee"
-                className="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-blue-500"
+                className="w-24 h-24 mx-auto mb-4 rounded-full"
             />
             <h2 className="text-xl font-semibold text-center text-gray-800 mb-2">
                 {employee.name}
