@@ -8,7 +8,7 @@ interface EmployeeCardProps {
 
 const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee, salary }) => {
     return (
-        <div className="bg-white shadow-lg rounded-lg p-6 border border-gray-200 w-72 max-w-sm mx-auto">
+        <div className="bg-white shadow-lg rounded-lg p-6 border border-gray-200 w-72 max-w-sm mx-auto hover:cursor-pointer hover:shadow-2xl transition duration-300">
             <img
                 src={empImg}
                 alt="Employee"
@@ -56,12 +56,6 @@ const EmployeeCard: React.FC<EmployeeCardProps> = ({ employee, salary }) => {
                     </p>
                 </div>
             ) : null}
-
-            <div className="flex justify-center mt-4">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition">
-                    Detalles
-                </button>
-            </div>
         </div>
     );
 };
