@@ -41,7 +41,7 @@ export interface Employee {
   // Implementación del Visitor para calcular salarios
   export class SalaryCalculator implements EmployeeVisitor {
     visitSalariedEmployee(employee: SalariedEmployee): number {
-      return employee.salary;
+      return employee.salary * employee.monthsWorked;
     }
   
     visitHourlyEmployee(employee: HourlyEmployee): number {

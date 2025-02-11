@@ -33,6 +33,12 @@ const App: React.FC = () => {
     setEmployees((prevEmployees) => [...prevEmployees, newEmployee]);
   };
 
+  const handleDeleteEmployee = (employee: Employee) => {
+    setEmployees((prevEmployees) => prevEmployees.filter((emp) => emp !== employee));
+    setIsModalOpen(false);
+  };
+  
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       <h1 className="text-2xl font-bold mb-4">Sistema de Nómina</h1>
@@ -46,11 +52,13 @@ const App: React.FC = () => {
       </div>
 
       <EmployeeModal
-        isOpen={isModalOpen}
-        employee={selectedEmployee}
-        onClose={() => setIsModalOpen(false)}
-        onSave={handleSaveEmployee}
-      />
+  isOpen={isModalOpen}
+  employee={selectedEmployee}
+  onClose={() => setIsModalOpen(false)}
+  onSave={handleSaveEmployee}
+  onDelete={handleDeleteEmployee} // Se pasa la función de eliminación
+/>
+
     </div>
   );
 };
