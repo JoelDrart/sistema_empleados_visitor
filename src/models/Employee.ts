@@ -1,4 +1,5 @@
 // Interfaz base para empleados
+
 export interface Employee {
     accept(visitor: EmployeeVisitor): number;
     id: string;
