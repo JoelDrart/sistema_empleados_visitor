@@ -4,6 +4,7 @@ export const API_ROUTES = {
   GET_EMPLOYEES: `${API_URL}/employees`,
   CREATE_SALARIED: `${API_URL}/employees/salaried`,
   CREATE_HOURLY: `${API_URL}/employees/hourly`,
-  UPDATE_EMPLOYEE: `${API_URL}/employees`,
+  UPDATE_SALARIED: `${API_URL}/employees/salaried`,
+  UPDATE_HOURLY: `${API_URL}/employees/hourly`,
   DELETE_EMPLOYEE: `${API_URL}/employees`,
 };
