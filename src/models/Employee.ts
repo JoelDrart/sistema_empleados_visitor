@@ -1,6 +1,7 @@
 // Interfaz base para empleados
 export interface Employee {
     accept(visitor: EmployeeVisitor): number;
+    id: string;
     name: string;
     getType(): string; // Método para obtener el tipo de empleado
 }
@@ -8,6 +9,7 @@ export interface Employee {
 // Empleado asalariado
 export class SalariedEmployee implements Employee {
     constructor(
+        public id: string,
         public name: string,
         public salary: number,
         public monthsWorked: number = 1
@@ -25,6 +27,7 @@ export class SalariedEmployee implements Employee {
 // Empleado por horas
 export class HourlyEmployee implements Employee {
     constructor(
+        public id: string,
         public name: string,
         public hourlyRate: number,
         public hoursWorked: number
