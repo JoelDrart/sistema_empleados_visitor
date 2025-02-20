@@ -6,7 +6,6 @@ import {
     SalariedEmployee,
     HourlyEmployee,
     Employee,
-    SalaryCalculator,
 } from "../models/Employee";
 import {
     AddHourlyEmployeeDto,
@@ -19,17 +18,20 @@ const useEmployeeLogic = () => {
     const {
         employees,
         loading,
+        dbConnectionError,
         setEmployees,
         addEmployee,
         updateEmployee,
         deleteEmployee,
         setLoading,
+        setdbConnectionError,
     } = useEmployeeStore();
 
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const salaryCalculator = new SalaryCalculator();
+    const errorDB = "Error de conexión con el servidor. Intente de nuevo más tarde.";
+
 
     // Función para obtener empleados
     const fetchEmployees = async () => {
@@ -59,9 +61,12 @@ const useEmployeeLogic = () => {
                 .filter((emp) => emp !== null) as Employee[];
 
             setEmployees(fetchedEmployees);
+            setdbConnectionError("");
             console.log("Employees fetched:", response.data);
         } catch (error) {
+            setdbConnectionError(errorDB);
             console.error("Error fetching employees:", error);
+            
         } finally {
             setLoading(false);
         }
@@ -70,6 +75,7 @@ const useEmployeeLogic = () => {
     // Efecto para cargar empleados al inicio
     useEffect(() => {
         fetchEmployees();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Función para editar un empleado
@@ -108,8 +114,10 @@ const useEmployeeLogic = () => {
             }
 
             updateEmployee(updatedEmployee);
+            setdbConnectionError("");
             setIsModalOpen(false);
         } catch (error) {
+            setdbConnectionError(errorDB);
             console.error("Error updating employee:", error);
         }
     };
@@ -132,9 +140,10 @@ const useEmployeeLogic = () => {
                 newEmployeeDto.salary,
                 newEmployeeDto.monthsWorked
             );
-
+            setdbConnectionError("");
             addEmployee(newEmployee);
         } catch (error) {
+            setdbConnectionError(errorDB);
             console.error("Error adding salaried employee:", error);
         }
     };
@@ -159,7 +168,9 @@ const useEmployeeLogic = () => {
             );
 
             addEmployee(newEmployee);
+            setdbConnectionError("");
         } catch (error) {
+            setdbConnectionError(errorDB);
             console.error("Error adding hourly employee:", error);
         }
     };
@@ -171,12 +182,14 @@ const useEmployeeLogic = () => {
             deleteEmployee(employee.id);
             setIsModalOpen(false);
         } catch (error) {
+            setdbConnectionError(errorDB);
             console.error("Error deleting employee:", error);
         }
     };
 
     return {
         employees,
+        dbConnectionError,
         loading,
         selectedEmployee,
         isModalOpen,
