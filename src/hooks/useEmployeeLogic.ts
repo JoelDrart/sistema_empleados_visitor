@@ -2,11 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_ROUTES } from "../config/api";
-import {
-    SalariedEmployee,
-    HourlyEmployee,
-    Employee,
-} from "../models/Employee";
+import { SalariedEmployee, HourlyEmployee, Employee } from "../models/Employee";
 import {
     AddHourlyEmployeeDto,
     AddSalariedEmployeeDto,
@@ -27,11 +23,14 @@ const useEmployeeLogic = () => {
         setdbConnectionError,
     } = useEmployeeStore();
 
-    const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+    const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
+        null
+    );
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAdding, setIsAdding] = useState(false);
 
-    const errorDB = "Error de conexión con el servidor. Intente de nuevo más tarde.";
-
+    const errorDB =
+        "Error de conexión con el servidor. Intente de nuevo más tarde.";
 
     // Función para obtener empleados
     const fetchEmployees = async () => {
@@ -66,7 +65,6 @@ const useEmployeeLogic = () => {
         } catch (error) {
             setdbConnectionError(errorDB);
             console.error("Error fetching employees:", error);
-            
         } finally {
             setLoading(false);
         }
@@ -75,7 +73,7 @@ const useEmployeeLogic = () => {
     // Efecto para cargar empleados al inicio
     useEffect(() => {
         fetchEmployees();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Función para editar un empleado
@@ -123,55 +121,46 @@ const useEmployeeLogic = () => {
     };
 
     // Función para agregar un empleado asalariado
-    const handleAddSalaried = async () => {
+    const handleAddSalaried = async (name: string) => {
+        setIsAdding(true);
         try {
             const newEmployeeDto: AddSalariedEmployeeDto = {
                 id: crypto.randomUUID(),
-                name: "Nuevo Asalariado",
+                name,
                 salary: 2500,
                 monthsWorked: 1,
             };
 
             await axios.post(API_ROUTES.CREATE_SALARIED, newEmployeeDto);
-
-            const newEmployee = new SalariedEmployee(
-                newEmployeeDto.id,
-                newEmployeeDto.name,
-                newEmployeeDto.salary,
-                newEmployeeDto.monthsWorked
-            );
+            await fetchEmployees(); // Actualizamos la lista desde el servidor
             setdbConnectionError("");
-            addEmployee(newEmployee);
         } catch (error) {
             setdbConnectionError(errorDB);
             console.error("Error adding salaried employee:", error);
+        } finally {
+            setIsAdding(false);
         }
     };
 
     // Función para agregar un empleado por horas
-    const handleAddHourly = async () => {
+    const handleAddHourly = async (name: string) => {
+        setIsAdding(true);
         try {
             const newEmployeeDto: AddHourlyEmployeeDto = {
                 id: crypto.randomUUID(),
-                name: "Nuevo Por Hora",
+                name,
                 hourlyRate: 15,
                 hoursWorked: 40,
             };
 
             await axios.post(API_ROUTES.CREATE_HOURLY, newEmployeeDto);
-
-            const newEmployee = new HourlyEmployee(
-                newEmployeeDto.id,
-                newEmployeeDto.name,
-                newEmployeeDto.hourlyRate,
-                newEmployeeDto.hoursWorked
-            );
-
-            addEmployee(newEmployee);
+            await fetchEmployees(); // Actualizamos la lista desde el servidor
             setdbConnectionError("");
         } catch (error) {
             setdbConnectionError(errorDB);
             console.error("Error adding hourly employee:", error);
+        } finally {
+            setIsAdding(false);
         }
     };
 
@@ -193,6 +182,7 @@ const useEmployeeLogic = () => {
         loading,
         selectedEmployee,
         isModalOpen,
+        isAdding,
         setIsModalOpen,
         handleEditEmployee,
         handleSaveEmployee,
