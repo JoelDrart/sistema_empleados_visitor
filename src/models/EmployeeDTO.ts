@@ -3,6 +3,14 @@ export interface AddSalariedEmployeeDto {
     name: string;
     salary: number;
     monthsWorked: number;
+    telefono: string;
+    email: string;
+    especialidad: string;
+    cedula: string;
+    horario_inicio: string;
+    horario_fin: string;
+    duracion_cita: number;
+    activo: boolean;
 }
 
 export interface AddHourlyEmployeeDto {
@@ -10,6 +18,14 @@ export interface AddHourlyEmployeeDto {
     name: string;
     hourlyRate: number;
     hoursWorked: number;
+    telefono: string;
+    email: string;
+    especialidad: string;
+    cedula: string;
+    horario_inicio: string;
+    horario_fin: string;
+    duracion_cita: number;
+    activo: boolean;
 }
 
 export interface SalariedEmployeeDto {
@@ -28,6 +44,14 @@ export interface EmployeeResponseDto {
     id: string;
     name: string;
     type: "ASALARIADO" | "POR_HORAS";
+    telefono: string;
+    email: string;
+    especialidad: string;
+    cedula: string;
+    horario_inicio: string;
+    horario_fin: string;
+    duracion_cita: number;
+    activo: boolean;
     salaried?: SalariedEmployeeDto | null;
     hourly?: HourlyEmployeeDto | null;
 }

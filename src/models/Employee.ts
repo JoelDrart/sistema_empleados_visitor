@@ -4,6 +4,14 @@ export interface Employee {
     accept(visitor: EmployeeVisitor): number;
     id: string;
     name: string;
+    telefono: string;
+    email: string;
+    especialidad: string;
+    cedula: string;
+    horario_inicio: string;
+    horario_fin: string;
+    duracion_cita: number;
+    activo: boolean;
     getType(): string; // Método para obtener el tipo de empleado
 }
 
@@ -13,7 +21,15 @@ export class SalariedEmployee implements Employee {
         public id: string,
         public name: string,
         public salary: number,
-        public monthsWorked: number = 1
+        public monthsWorked: number = 1,
+        public telefono: string = "",
+        public email: string = "",
+        public especialidad: string = "",
+        public cedula: string = "",
+        public horario_inicio: string = "08:00",
+        public horario_fin: string = "17:00",
+        public duracion_cita: number = 30,
+        public activo: boolean = true
     ) {}
 
     accept(visitor: EmployeeVisitor): number {
@@ -31,7 +47,15 @@ export class HourlyEmployee implements Employee {
         public id: string,
         public name: string,
         public hourlyRate: number,
-        public hoursWorked: number
+        public hoursWorked: number,
+        public telefono: string = "",
+        public email: string = "",
+        public especialidad: string = "",
+        public cedula: string = "",
+        public horario_inicio: string = "08:00",
+        public horario_fin: string = "17:00",
+        public duracion_cita: number = 30,
+        public activo: boolean = true
     ) {}
 
     accept(visitor: EmployeeVisitor): number {

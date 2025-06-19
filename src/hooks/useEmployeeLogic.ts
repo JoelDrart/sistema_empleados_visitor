@@ -45,14 +45,30 @@ const useEmployeeLogic = () => {
                             emp.id,
                             emp.name,
                             emp.salaried.salary,
-                            emp.salaried.monthsWorked
+                            emp.salaried.monthsWorked,
+                            emp.telefono,
+                            emp.email,
+                            emp.especialidad,
+                            emp.cedula,
+                            emp.horario_inicio,
+                            emp.horario_fin,
+                            emp.duracion_cita,
+                            emp.activo
                         );
                     } else if (emp.type === "POR_HORAS" && emp.hourly) {
                         return new HourlyEmployee(
                             emp.id,
                             emp.name,
                             emp.hourly.hourlyRate,
-                            emp.hourly.hoursWorked
+                            emp.hourly.hoursWorked,
+                            emp.telefono,
+                            emp.email,
+                            emp.especialidad,
+                            emp.cedula,
+                            emp.horario_inicio,
+                            emp.horario_fin,
+                            emp.duracion_cita,
+                            emp.activo
                         );
                     }
                     return null;
@@ -91,6 +107,14 @@ const useEmployeeLogic = () => {
                     name: updatedEmployee.name,
                     salary: updatedEmployee.salary,
                     monthsWorked: updatedEmployee.monthsWorked,
+                    telefono: updatedEmployee.telefono,
+                    email: updatedEmployee.email,
+                    especialidad: updatedEmployee.especialidad,
+                    cedula: updatedEmployee.cedula,
+                    horario_inicio: updatedEmployee.horario_inicio,
+                    horario_fin: updatedEmployee.horario_fin,
+                    duracion_cita: updatedEmployee.duracion_cita,
+                    activo: updatedEmployee.activo,
                 };
 
                 await axios.put(
@@ -103,6 +127,14 @@ const useEmployeeLogic = () => {
                     name: updatedEmployee.name,
                     hourlyRate: updatedEmployee.hourlyRate,
                     hoursWorked: updatedEmployee.hoursWorked,
+                    telefono: updatedEmployee.telefono,
+                    email: updatedEmployee.email,
+                    especialidad: updatedEmployee.especialidad,
+                    cedula: updatedEmployee.cedula,
+                    horario_inicio: updatedEmployee.horario_inicio,
+                    horario_fin: updatedEmployee.horario_fin,
+                    duracion_cita: updatedEmployee.duracion_cita,
+                    activo: updatedEmployee.activo,
                 };
 
                 await axios.put(
@@ -111,7 +143,8 @@ const useEmployeeLogic = () => {
                 );
             }
 
-            updateEmployee(updatedEmployee);
+            // Actualizamos la lista completa después de la modificación
+            await fetchEmployees();
             setdbConnectionError("");
             setIsModalOpen(false);
         } catch (error) {
@@ -129,6 +162,14 @@ const useEmployeeLogic = () => {
                 name,
                 salary: 2500,
                 monthsWorked: 1,
+                telefono: "000-000-0000",
+                email: `${name.toLowerCase().replace(/\s+/g, ".")}@example.com`,
+                especialidad: "General",
+                cedula: "000-0000000-0",
+                horario_inicio: "08:00",
+                horario_fin: "17:00",
+                duracion_cita: 30,
+                activo: true,
             };
 
             await axios.post(API_ROUTES.CREATE_SALARIED, newEmployeeDto);
@@ -151,6 +192,14 @@ const useEmployeeLogic = () => {
                 name,
                 hourlyRate: 15,
                 hoursWorked: 40,
+                telefono: "000-000-0000",
+                email: `${name.toLowerCase().replace(/\s+/g, ".")}@example.com`,
+                especialidad: "General",
+                cedula: "000-0000000-0",
+                horario_inicio: "08:00",
+                horario_fin: "17:00",
+                duracion_cita: 30,
+                activo: true,
             };
 
             await axios.post(API_ROUTES.CREATE_HOURLY, newEmployeeDto);
